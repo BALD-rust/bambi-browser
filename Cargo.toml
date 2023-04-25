@@ -10,8 +10,8 @@ embassy-time = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy
 embassy-nrf = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy", features = ["time-driver-rtc1", "gpiote", "nightly", "nrf52840", "unstable-pac"] }
 
 # Debugging using a probe
-defmt = { version = "0.3.4", optional = true }
-defmt-rtt = { version = "0.4.0", optional = true }
+defmt = { version = "0.3.0", optional = true }
+defmt-rtt = { version = "0.3.2", optional = true }
 panic-probe = { version = "0.3.1", features = ["print-defmt"], optional = true }
 # Debugging using usb
 log = { version = "0.4.17", optional = true }
@@ -21,9 +21,6 @@ embassy-usb-logger = { git = "https://github.com/embassy-rs/embassy", optional =
 cortex-m = { version = "0.7.6", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.0"
 alloc-cortex-m = "0.4.3"
-
-[patch.crates-io]
-defmt = { git = "https://github.com/knurling-rs/defmt" }
 
 [features]
 defmt = [
