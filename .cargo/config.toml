@@ -1,2 +1,2 @@
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-runner = "probe-run"
+runner = "probe-run --chip nRF52840_xxAA"
