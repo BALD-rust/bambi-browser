@@ -5,8 +5,14 @@
 
 extern crate alloc;
 
+use alloc::vec::Vec;
 use core::alloc::Layout;
 use core::mem::MaybeUninit;
+
+use alloc_cortex_m::CortexMHeap;
+use embassy_executor::Spawner;
+use embassy_nrf::gpio::{Level, Output, OutputDrive};
+use embassy_time::{Duration, Timer};
 
 #[allow(unused_imports)]
 #[cfg(feature = "defmt")]
@@ -15,11 +21,6 @@ use {defmt_rtt as _, panic_probe as _};
 pub(crate) mod fmt;
 #[cfg(feature = "log")]
 mod logger;
-
-use alloc_cortex_m::CortexMHeap;
-use embassy_executor::Spawner;
-use embassy_nrf::gpio::{Level, Output, OutputDrive};
-use embassy_time::{Duration, Timer};
 
 #[global_allocator]
 static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
@@ -33,14 +34,18 @@ async fn main(_spawner: Spawner) {
         unsafe { ALLOCATOR.init(HEAP.as_ptr() as usize, HEAP_SIZE) }
     }
 
+    let mut v = Vec::new();
+
     let p = embassy_nrf::init(Default::default());
+
     #[cfg(feature = "log")]
     logger::init(&_spawner, p.USBD);
 
     let mut led = Output::new(p.P1_10, Level::Low, OutputDrive::Standard);
-    info!("Hello world");
 
     loop {
+        v.push(1);
+        info!("len = {}", v.len());
         led.set_high();
         Timer::after(Duration::from_millis(1000)).await;
         led.set_low();
