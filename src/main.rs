@@ -27,7 +27,6 @@ const HEAP_SIZE: usize = 1024;
 
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
-
     // Initialize allocator
     {
         static mut HEAP: [MaybeUninit<u8>; HEAP_SIZE] = [MaybeUninit::uninit(); HEAP_SIZE];
