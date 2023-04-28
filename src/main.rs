@@ -14,6 +14,8 @@ use embassy_executor::Spawner;
 use embassy_nrf::gpio::{Level, Output, OutputDrive};
 use embassy_time::{Duration, Timer};
 
+use swb_shared::Program;
+
 #[allow(unused_imports)]
 #[cfg(feature = "defmt")]
 use {defmt_rtt as _, panic_probe as _};
@@ -26,6 +28,13 @@ mod logger;
 static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
 const HEAP_SIZE: usize = 1024;
 
+static BINARY: &'static [u8; 91] = include_bytes!("../output.swb");
+
+fn parse_swb(bytes: &[u8]) -> Program {
+    let result = Program::try_from(bytes);
+    unwrap!(result)
+}
+
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
     // Initialize allocator
@@ -34,23 +43,12 @@ async fn main(_spawner: Spawner) {
         unsafe { ALLOCATOR.init(HEAP.as_ptr() as usize, HEAP_SIZE) }
     }
 
-    let mut v = Vec::new();
-
     let p = embassy_nrf::init(Default::default());
-
     #[cfg(feature = "log")]
     logger::init(&_spawner, p.USBD);
 
-    let mut led = Output::new(p.P1_10, Level::Low, OutputDrive::Standard);
-
-    loop {
-        v.push(1);
-        info!("len = {}", v.len());
-        led.set_high();
-        Timer::after(Duration::from_millis(1000)).await;
-        led.set_low();
-        Timer::after(Duration::from_millis(1000)).await;
-    }
+    let program = parse_swb(BINARY);
+    info!("{}", program);
 }
 
 #[cfg(feature = "defmt")]
