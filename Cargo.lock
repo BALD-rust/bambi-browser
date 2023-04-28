@@ -18,7 +18,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3ff7eb3f316534d83a8a2c3d1674ace8a5a71198eba31e2e2b597833f699b28"
 dependencies = [
- "critical-section 1.1.1",
+ "critical-section",
 ]
 
 [[package]]
@@ -27,7 +27,7 @@ version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c314e70d181aa6053b26e3f7fbf86d1dfff84f816a6175b967666b3506ef7289"
 dependencies = [
- "critical-section 1.1.1",
+ "critical-section",
 ]
 
 [[package]]
@@ -69,12 +69,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bare-metal"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8fe8f5a8a398345e52358e18ff07cc17a568fbca5c6f73873d3a62056309603"
-
-[[package]]
 name = "bitfield"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -110,9 +104,9 @@ version = "0.7.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ec610d8f49840a5b376c69663b6369e71f4b34484b9b2eb29fb918d92516cb9"
 dependencies = [
- "bare-metal 0.2.5",
+ "bare-metal",
  "bitfield",
- "critical-section 1.1.1",
+ "critical-section",
  "embedded-hal 0.2.7",
  "volatile-register",
 ]
@@ -135,16 +129,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
-]
-
-[[package]]
-name = "critical-section"
-version = "0.2.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c1706d332edc22aef4d9f23a6bb1c92360a403013c291af51247a737472dcae6"
-dependencies = [
- "bare-metal 1.0.0",
- "critical-section 1.1.1",
 ]
 
 [[package]]
@@ -228,11 +212,11 @@ dependencies = [
 
 [[package]]
 name = "defmt-rtt"
-version = "0.3.2"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d2cbbbd58847d508d97629b32cd9730a2d28532f71e219714614406029f18b1"
+checksum = "609923761264dd99ed9c7d209718cda4631c5fe84668e0f0960124cbb844c49f"
 dependencies = [
- "critical-section 0.2.8",
+ "critical-section",
  "defmt",
 ]
 
@@ -244,7 +228,7 @@ dependencies = [
  "atomic-polyfill 1.0.2",
  "cfg-if",
  "cortex-m",
- "critical-section 1.1.1",
+ "critical-section",
  "embassy-executor",
  "embassy-hal-common",
  "embassy-macros",
@@ -272,7 +256,7 @@ source = "git+https://github.com/embassy-rs/embassy?rev=b05cd77#b05cd77a62bc8902
 dependencies = [
  "atomic-polyfill 1.0.2",
  "cfg-if",
- "critical-section 1.1.1",
+ "critical-section",
  "embassy-macros",
  "embassy-time",
  "futures-util",
@@ -282,7 +266,7 @@ dependencies = [
 [[package]]
 name = "embassy-futures"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 
 [[package]]
 name = "embassy-hal-common"
@@ -306,12 +290,12 @@ dependencies = [
 [[package]]
 name = "embassy-net-driver"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 
 [[package]]
 name = "embassy-net-driver-channel"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 dependencies = [
  "embassy-futures",
  "embassy-net-driver",
@@ -326,7 +310,7 @@ dependencies = [
  "cfg-if",
  "cortex-m",
  "cortex-m-rt",
- "critical-section 1.1.1",
+ "critical-section",
  "embassy-cortex-m",
  "embassy-embedded-hal",
  "embassy-hal-common",
@@ -351,7 +335,7 @@ version = "0.1.0"
 source = "git+https://github.com/embassy-rs/embassy?rev=b05cd77#b05cd77a62bc8902db2ae2dd36ed58b88acee932"
 dependencies = [
  "cfg-if",
- "critical-section 1.1.1",
+ "critical-section",
  "embedded-io",
  "futures-util",
  "heapless",
@@ -360,10 +344,10 @@ dependencies = [
 [[package]]
 name = "embassy-sync"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 dependencies = [
  "cfg-if",
- "critical-section 1.1.1",
+ "critical-section",
  "embedded-io",
  "futures-util",
  "heapless",
@@ -376,7 +360,7 @@ source = "git+https://github.com/embassy-rs/embassy?rev=b05cd77#b05cd77a62bc8902
 dependencies = [
  "atomic-polyfill 1.0.2",
  "cfg-if",
- "critical-section 1.1.1",
+ "critical-section",
  "embassy-sync 0.1.0",
  "embedded-hal 0.2.7",
  "embedded-hal-async",
@@ -387,7 +371,7 @@ dependencies = [
 [[package]]
 name = "embassy-usb"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 dependencies = [
  "embassy-futures",
  "embassy-net-driver-channel",
@@ -406,12 +390,12 @@ source = "git+https://github.com/embassy-rs/embassy?rev=b05cd77#b05cd77a62bc8902
 [[package]]
 name = "embassy-usb-driver"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 
 [[package]]
 name = "embassy-usb-logger"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy#0dea7b02d6d320efabede5d7e5470bb0d42cfa88"
+source = "git+https://github.com/embassy-rs/embassy#3e730aa8b06401003202bf9e21a9c83ec6b21b0e"
 dependencies = [
  "embassy-futures",
  "embassy-sync 0.2.0",
