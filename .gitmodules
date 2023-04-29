@@ -1,0 +1,6 @@
+[submodule "swb-shared"]
+	path = swb-shared
+	url = ssh://git@github.com/BALD-rust/swb-compiler
+[submodule "toekomst"]
+	path = toekomst
+	url = ssh://git@github.com/BALD-rust/toekomst

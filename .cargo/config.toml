@@ -6,3 +6,6 @@ target = "thumbv7em-none-eabihf"
 
 [env]
 DEFMT_LOG = "trace"
+
+[net]
+git-fetch-with-cli = true
