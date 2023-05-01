@@ -5,14 +5,12 @@
 
 extern crate alloc;
 
+use alloc::format;
 use core::alloc::Layout;
 use core::mem::MaybeUninit;
-use alloc::format;
 use embassy_embedded_hal::adapter::BlockingAsync;
 use embassy_executor::_export::StaticCell;
 use embassy_futures::select::select3;
-use embassy_nrf::Peripheral;
-use embassy_nrf::Peripherals;
 use embassy_nrf::interrupt;
 use embassy_nrf::interrupt::Priority;
 use embassy_nrf::pac::TWIS0;
@@ -21,39 +19,40 @@ use embassy_nrf::peripherals::P0_12;
 use embassy_nrf::peripherals::TWISPI0;
 use embassy_nrf::twim;
 use embassy_nrf::twim::Twim;
+use embassy_nrf::Peripheral;
+use embassy_nrf::Peripherals;
 use nrf_softdevice::ble;
+use nrf_softdevice::ble::peripheral;
 use nrf_softdevice::ble::Connection;
 use nrf_softdevice::ble::TxPower;
-use nrf_softdevice::ble::peripheral;
-use nrf_softdevice::{raw, Softdevice};
 use nrf_softdevice::ble::{central, gatt_client, Address, AddressType};
+use nrf_softdevice::{raw, Softdevice};
 
 use alloc_cortex_m::CortexMHeap;
 use embassy_executor::Spawner;
 
-use embassy_futures::join;
 use swb_shared::Program;
 use swb_shared::{Instruction, StyleVar};
 
 use embassy_embedded_hal::shared_bus::asynch::i2c::I2cDevice;
-use embassy_futures::select::select;
 use embassy_futures::join::{join, join3, join4};
+use embassy_futures::select::select;
 use embassy_sync::blocking_mutex::raw::ThreadModeRawMutex;
 use embassy_sync::mutex::Mutex;
 use embedded_graphics::geometry::{Point, Size};
 use toekomst::display::disp;
 
-use toekomst::label::{label_once, label_once_bold, label_with};
-use toekomst::{label};
+use bbq10kbd::{Bbq10Kbd, KeyRaw, KeyStatus};
+use toekomst::button::Button;
 use toekomst::display::request_redraw;
-use toekomst::layout::Vertical;
-use toekomst::notify::Notify;
 use toekomst::input::Input;
 use toekomst::key::Accel;
 use toekomst::key::Key;
+use toekomst::label;
+use toekomst::label::{label_once, label_once_bold, label_with};
+use toekomst::layout::Vertical;
+use toekomst::notify::Notify;
 use toekomst::widget::Widget;
-use toekomst::button::Button;
-use bbq10kbd::{Bbq10Kbd, KeyStatus, KeyRaw};
 
 #[allow(unused_imports)]
 #[cfg(feature = "defmt")]
@@ -86,11 +85,9 @@ struct StyleVarStack {
 
 impl StyleVarStack {
     pub fn new() -> Self {
-        Self {
-            state: 0,
-        }
+        Self { state: 0 }
     }
-    
+
     pub fn push(&mut self) {
         self.state += 1;
     }
@@ -140,20 +137,24 @@ async fn render_page(page: &Program, scroll_notify: &Notify<Scroll>) {
         let mut cur_line = 0;
         let mut line_space_left = 240 / line_height;
         for instr in &page.code {
-            if line_space_left == 0 { break; }
+            if line_space_left == 0 {
+                break;
+            }
             match instr {
                 Instruction::Text(address) => {
                     cur_line += 1;
-                    if cur_line < start_line + 1 { continue; }
+                    if cur_line < start_line + 1 {
+                        continue;
+                    }
                     //info!("text: {}", format!("{}", address).as_str());
-                    let str = 
-                        page
-                            .text
-                            .as_bytes()
-                            .get(
-                                address.base.0 as usize..
-                                (address.base.offset(address.range as i32).0 as usize))
-                            .unwrap();
+                    let str = page
+                        .text
+                        .as_bytes()
+                        .get(
+                            address.base.0 as usize
+                                ..(address.base.offset(address.range as i32).0 as usize),
+                        )
+                        .unwrap();
                     let str = core::str::from_utf8(str).unwrap();
                     if bold.is_enabled() {
                         label_once_bold(str, v.push(label::FONT.character_size)).await;
@@ -172,7 +173,9 @@ async fn render_page(page: &Program, scroll_notify: &Notify<Scroll>) {
                 Instruction::Pop(_) => {}
                 Instruction::Endl => {
                     cur_line += 1;
-                    if cur_line < start_line { continue; }
+                    if cur_line < start_line {
+                        continue;
+                    }
                     line_space_left -= 1;
                     v.push(label::FONT.character_size);
                 }
@@ -181,7 +184,7 @@ async fn render_page(page: &Program, scroll_notify: &Notify<Scroll>) {
                 }
             }
         }
-        
+
         request_redraw();
 
         // We rendered our current version of the page, now wait for a scroll command
@@ -191,7 +194,7 @@ async fn render_page(page: &Program, scroll_notify: &Notify<Scroll>) {
                 start_line -= LINES_PER_SCROLL;
                 start_line = start_line.max(0);
                 info!("Scrolling up to {}", start_line);
-            },
+            }
             Scroll::Down => {
                 start_line += LINES_PER_SCROLL;
                 info!("Scrolling down to {}", start_line);
@@ -220,13 +223,13 @@ fn parse_key_state(value: u8) -> Option<Key> {
 
 #[embassy_executor::task]
 async fn keyboard_driver(twim: TWISPI0, p0_12: P0_12, p0_11: P0_11) {
-    static I2C_BUS: StaticCell<Mutex::<ThreadModeRawMutex, Twim<TWISPI0>>> = StaticCell::new();
+    static I2C_BUS: StaticCell<Mutex<ThreadModeRawMutex, Twim<TWISPI0>>> = StaticCell::new();
     let config = twim::Config::default();
     let irq = interrupt::take!(SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0);
     info!("Got irq");
     let i2c = Twim::new(twim, irq, p0_12, p0_11, config);
     let i2c_bus = Mutex::<ThreadModeRawMutex, _>::new(i2c);
-    let i2c_bus = I2C_BUS.init(i2c_bus); 
+    let i2c_bus = I2C_BUS.init(i2c_bus);
     info!("Created I2C bus");
     let mut kb = Bbq10Kbd::new(I2cDevice::new(i2c_bus));
     info!("Initialized keyboard driver");
@@ -238,7 +241,7 @@ async fn keyboard_driver(twim: TWISPI0, p0_12: P0_12, p0_11: P0_11) {
                     Some(key) => toekomst::key::press_key(key),
                     None => {}
                 };
-            },
+            }
             _ => {}
         }
     }
@@ -249,7 +252,18 @@ async fn softdevice_driver(sd: &'static Softdevice) -> ! {
     sd.run().await
 }
 
-fn initialize_softdevice(spawner: &Spawner) -> &'static Softdevice {
+#[nrf_softdevice::gatt_service(uuid = "feed")]
+struct TestService {
+    #[characteristic(uuid = "f00d", write, read, notify)]
+    value: u8,
+}
+
+#[nrf_softdevice::gatt_server]
+struct Server {
+    test: TestService,
+}
+
+fn initialize_softdevice(spawner: &Spawner) -> (&'static Softdevice, Server) {
     let config = nrf_softdevice::Config {
         clock: Some(raw::nrf_clock_lf_cfg_t {
             source: raw::NRF_CLOCK_LF_SRC_RC as u8,
@@ -259,10 +273,12 @@ fn initialize_softdevice(spawner: &Spawner) -> &'static Softdevice {
         }),
         conn_gap: Some(raw::ble_gap_conn_cfg_t {
             conn_count: 6,
-            event_length: 6,
+            event_length: 24,
         }),
-        conn_gatt: Some(raw::ble_gatt_conn_cfg_t { att_mtu: 128 }),
-        gatts_attr_tab_size: Some(raw::ble_gatts_cfg_attr_tab_size_t { attr_tab_size: 32768 }),
+        conn_gatt: Some(raw::ble_gatt_conn_cfg_t { att_mtu: 256 }),
+        gatts_attr_tab_size: Some(raw::ble_gatts_cfg_attr_tab_size_t {
+            attr_tab_size: 32768,
+        }),
         gap_role_count: Some(raw::ble_gap_cfg_role_count_t {
             adv_set_count: 1,
             periph_role_count: 3,
@@ -275,36 +291,31 @@ fn initialize_softdevice(spawner: &Spawner) -> &'static Softdevice {
             current_len: 9,
             max_len: 9,
             write_perm: unsafe { core::mem::zeroed() },
-            _bitfield_1: raw::ble_gap_cfg_device_name_t::new_bitfield_1(raw::BLE_GATTS_VLOC_STACK as u8),
+            _bitfield_1: raw::ble_gap_cfg_device_name_t::new_bitfield_1(
+                raw::BLE_GATTS_VLOC_STACK as u8,
+            ),
         }),
         ..Default::default()
     };
 
     let sd = Softdevice::enable(&config);
+    let server = Server::new(sd).unwrap();
     spawner.spawn(softdevice_driver(sd)).unwrap();
-    sd
+    (sd, server)
 }
 
 // Note: reversed!
 const SERVER_ADDR: [u8; 6] = [0x26, 0x28, 0xec, 0xcf, 0x7f, 0x28];
 
-#[nrf_softdevice::gatt_client(uuid = "feed")]
-struct TestServiceClient {
-    #[characteristic(uuid = "f00d", write, read, notify)]
-    value: u8,
-}
-
-async fn scan_for_server(sd: &'static Softdevice) -> (TestServiceClient, Connection) {
-    let addrs = &[&Address::new(
-        AddressType::Public,
-        SERVER_ADDR,
-    )];
-    let mut config = central::ConnectConfig::default();
-    config.scan_config.whitelist = Some(addrs);
-    let conn = central::connect(sd, &config).await.unwrap();
-    info!("connected");
-
-    (gatt_client::discover(&conn).await.unwrap(), conn)
+async fn advertise(sd: &'static Softdevice) -> Connection {
+    let config = peripheral::Config::default();
+    let adv = peripheral::ConnectableAdvertisement::NonscannableDirected {
+        peer: Address::new(AddressType::Public, SERVER_ADDR),
+    };
+    let conn = peripheral::advertise_connectable(sd, adv, &config)
+        .await
+        .unwrap();
+    conn
 }
 
 #[embassy_executor::main]
@@ -319,17 +330,26 @@ async fn main(spawner: Spawner) {
     config.gpiote_interrupt_priority = Priority::P2;
     let p = embassy_nrf::init(config);
 
-    let sd = initialize_softdevice(&spawner);
+    let (sd, server) = initialize_softdevice(&spawner);
     info!("Initialized softdevice");
     info!("My address: {:?}", ble::get_address(sd));
 
-    let (client, _) = scan_for_server(sd).await;
-    client.value_write(&5).await.unwrap();
+    let connection = advertise(sd).await;
+    info!("Connected to {}", format!("{:?}", connection.peer_address()).as_str());
 
-    spawner.spawn(keyboard_driver(p.TWISPI0, p.P0_12, p.P0_11)).unwrap();
+    spawner
+        .spawn(keyboard_driver(p.TWISPI0, p.P0_12, p.P0_11))
+        .unwrap();
 
     let program = parse_swb(BINARY);
-    toekomst::display::init_disp(p.SPI2, p.P0_14, p.P0_13, p.P0_03, p.P0_02, Size::new(400, 240));
+    toekomst::display::init_disp(
+        p.SPI2,
+        p.P0_14,
+        p.P0_13,
+        p.P0_03,
+        p.P0_02,
+        Size::new(400, 240),
+    );
     info!("Display initialized");
 
     select(toekomst::display::run_disp(), ui(&program)).await;

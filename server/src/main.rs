@@ -1,5 +1,7 @@
 //! Serves a Bluetooth GATT echo server.
 
+#![feature(async_closure)]
+
 use bluer::{
     adv::Advertisement,
     Uuid,
@@ -55,6 +57,9 @@ async fn main() -> bluer::Result<()> {
                 }),
                 read: Some(CharacteristicRead {
                     read: true,
+                    fun: Box::new(|req| Box::pin(async move {
+                        Ok(vec![5u8])
+                    })),
                     ..Default::default()
                 }),
                 notify: Some(CharacteristicNotify {
