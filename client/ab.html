@@ -1,0 +1,231 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; Linux 2.4.20-pre11 i686) [Netscape]">
+   <title>Thuisbladzijde van AB 2022-2023</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<hr>
+<center>
+<h1>
+AB 2022-2023</h1>
+</center>
+<hr>
+
+<a href="./ab-05-10-2022.pdf"><b>Cursusnotas</b></a> [UP TO DATE: meest recente aanpassing 27 september 2022]
+<p> Errata:
+<ul>
+<li> Het bewijs van het pompend lemma voor reguliere talen bevat een fout! Namelijk, de indices van de rijen symbolen om x en y te definieren. Dit moet zijn: x = a_{1}..a_{i-1} en y = a_{i}..a_{j-1}. Ga dat na! (Met dank aan Ferre Van der Vieren).
+
+<p>
+Bewijs. Neem een DFA die L bepaalt. Neem d = #Q. 
+Neem een willekeurige s = a<sub>1</sub>a<sub>2</sub>..a<sub>n</sub>  &isin; L met n  	&ge; d. Beschouw de accepterende sequentie
+van toestanden (q<sub>1</sub>, q<sub>2</sub>, ..., q<sub>n+1</sub>) voor s (a<sub>i</sub> wordt gelezen bij transitie van q<sub>i</sub>  naar q<sub>i+1</sub>).
+De lengte n + 1 is strikt groter dan d, het aantal toestanden in Q, dus bezit deze rij een
+initieel segment van lengte d + 1. Dit segment bevat twee gelijke toestanden. Stel dat q<sub>i</sub>
+en q<sub>j</sub> gelijk zijn (1 &le; i &lt; j &le; d + 1) dan nemen we x = a<sub>1</sub>..a<sub>i-1</sub>  (gelezen van q<sub>1</sub> tot q<sub>i</sub>)
+en y = a<sub>i</sub>..a<sub>j-1</sub> (gelezen van q<sub>i</sub> tot q<sub>j</sub> ) en z de rest van de string. Alles volgt nu direct.
+(Ga dat na!). Figuur 2.16 illustreert de verdeling van s in xyz.
+  </li>
+<!-- verbeteringen 2020 
+<li> p.32: Definitie 2.12.1: vervang q1 door q2 in de linkerleden van de twee gelijkheden.
+<li> p.33: Stelling 2.12.2: Vervang overal in de stelling S door F, q_1 en x door p, en q_2 en y door q. De stelling wordt dan: De relatie f-gelijk is een equivalentie-relatie.  Als p, q f-gelijk zijn dan geldt voor elk symbool a dat \delta(p,a) en \delta(q,a) ook f-gelijk zijn. Als p, q f-gelijk zijn dan geldt p\in F alss q\in F.
+<li> P. 35: De inductie-regel bevat een verkeerde conditie en moet vereenvoudigd worden tot: p, q zijn f-verschillend indien  er bestaat een symbool a zodat \delta(p,a) en \delta(q,a) f-verschillend zijn. 
+<li> p.34-36: ik stelde vast de uitleg van de co-inductieve definitie van f-gelijk versus de inductieve definitie van f-verschillend niet duidelijk was. In   <a href="./Correctie-co-inductie.pdf">dit documentje </a>wordt het hopelijk beter uitgelegd. 
+-->
+
+</ul>
+<p>
+
+De inhoud van de cursus kan je op veel plaatsen in boeken terugvinden,
+want het gaat om klassieke theorie die in elke opleiding
+informatica/computerwetenschappen voorkomt. Aanraders zijn
+o.a. "Introduction to the Theory of Computation" van Michael Sipser en
+"Automata and Computability" van Dexter C. Kozen voor hoofdstukken 2
+en 3. Voor hoofdstuk 4, zie de reflijst in sectie 4.4.
+
+<hr>
+<li> <a href="#plaats-0"> Het examenverloop </a> </li>
+<li> <a href="#plaats-2"> De lessen en het wekelijkse filmpje</a> </li>
+<li> <a href="#plaats-4"> De planning</a> </li>
+<li> <a href="#plaats-5"> Wat examenvragen van vroeger </a> </li>
+<li> <a href="#plaats-6"> Regels vd gekwoteerde oefenzittingen </a> </li>
+<li> <a href="#plaats-7"> De  oefenzittingen </a> </li>
+
+
+
+
+<hr>
+
+<p><b id="plaats-0"><font size=+1>Het examenverloop</font></b>
+<p>
+
+In corona-tijden zal het examen schriftelijk zijn en  2uur duren. De vragen zijn van soortgelijke aard als anders.  <br>
+
+In corona-vrije omstandigheden is het examen  mondeling met "schriftelijke" voorbereiding, gesloten boek
+en gaat hoofdzakelijk over de theorie. <br>
+
+De "schriftelijke" voorbereiding duurt ongeveer 1 uur, de mondelinge
+ondervraging ongeveer 15 minuten. <br>
+
+
+Het examen gaat over de theorie in de cursustekst. Varianten van
+constructies en stellingen kunnen gevraagd worden om verder inzicht en
+vaardigheid in het toepassen van de theorie na te gaan. <br>
+
+In twee oefenzittingen  krijgen de studenten
+de kans om schriftelijk en individueel een opdracht te maken die
+telkens op 3/20 punten staat.  Die punten worden overgedragen naar de
+2de examenkans zonder mogelijkheid die opnieuw te behalen: het gaat
+immers om (partiele) permanente evaluatie.  Wie niet slaagt voor het
+examen tijdens de examenperiode kan niet slagen voor het vak.
+
+<!--
+<br>
+Evenwel, omwille van Covid moet deze regeling herzien worden. Voorlopig gaan de tweede gekwoteerde oefenzitting op 14/12 door zoals voorzien, maar enkel in een ander lokaal.  De eerste oefenzitting wordt eventueel naar achter geschoven tot op 7/12.  Het is mogelijk dat ze beide afgeschaft worden. In dat geval zullen oefeningen tijdens het examen gesteld worden.  -->
+
+
+
+<hr>
+
+
+<p><b id="plaats-2"><font size=+1>De "lessen" en het wekelijkse filmpje</font></b>
+<p>
+AB gaat door in het eerste semester, maar wordt niet op de klassieke
+manier gedoceerd. De syllabus heeft 4 delen: Automaten en Talen,
+Berekenbaarheid, Herschrijfsystemen en Andere Paradigmas. Er zijn
+cursusnotas in het nederlands. Ze worden verspreid langs de
+WINA-cursusdienst, en zullen hier beschikbaar blijven. Mogelijk worden
+een paar aanvullingen in de les verspreid, tegen minimale kost (maar
+de pdf's zal je hier altijd kunnen downloaden).
+
+<p>
+
+Bij elke les hoort een kort introductiefilmpje. Hoe maak je er gebruik
+van ... hier een suggestie: bekijk/beluister het filmpje, bestudeer
+dan de overeenkomstige cursustekst, en bekijk/beluister het filmpje
+nog eens. Is nog niet alles duidelijk, dan heb je vragen om in de les
+te stellen. Is alles duidelijk ... dan heb je waarschijnlijk een en
+ander gemist, en is het nuttig om naar de les te komen om nog wat bij
+te leren.
+
+<p>
+Lessen kunnen on-line gevolgd worden via de Collaborate course meeting room op Toledo. Opnames zullen ter beschikking gesteld worden. 
+
+<p>
+Mocht blijken dat er een voorkeur bestaat om de lessen helemaal on-line te organiseren, dan zullen we daartoe overgaan.
+
+<p>
+
+
+<b><font size=+3>Bereid de les en de oefenzitting voor !</font></b>
+
+<hr>
+<b id="plaats-4"> <font size=+1>De planning</font></b><p>
+
+
+
+<table border="1" rules="all" cellpadding="10">
+     <th> Datum les </th> <th> Datum Oefenzitting </th> <th> Voorbereiden    </th> <th> bijhorend filmpje-slides </th> <th> opmerkingen </th>
+<tr> <td> 3 okt   </td> <td>                    </td> <td> cursus t.e.m. 2.8 </td> <td> <a href="./filmpjeab1.mp4"> filmpje1 </a> en <a href="./slides1.pdf"> slides1 </a> </td> <td>  <!--   Een paar <a href="./comm1.pdf"> bedenkingen </a> over het nut van automaten en berekenbaarheid      -->      </td> </tr>
+<tr> <td> 10 okt     </td> <td>                    </td> <td> cursus t.e.m. 2.12 </td> <td> <a href="./filmpjeab2.mp4"> filmpje2 </a> en <a href="./slides2.pdf"> slides2 </a>  </td> <td>                                               </td> </tr>
+
+<tr> <td>  </td> 
+<td>  11 okt             </td> <td>  <a href="./oefz16-1.pdf"> Opgave oefenzitting 1 </a> </td> <td> </td> <td> <!-- --> <a href="sol16-1.pdf"> een oplossing </a>  <!-- --> <!-- --> Hint voor vraag 3b): definieer n toestanden q0,..,qn-1, definieer delta zodanig dat na het parsen van de deelstring p1..pk van de volledige string p1..pl we in toestand qi zitten waarbij i=(p1..pk)modulo n. Bv. na het parsen van de string '11' zitten we in de toestand pi, met i= 3 modulo n. Na het parsen van '111' zitten we in toestand pj, met j = 7 modulo n. <!-- -->    </td> </tr>
+
+<tr> <td> 17 okt    </td> <td>                    </td> <td> cursus t.e.m. 2.18 </td> <td> <a href="./filmpjeab3.mp4"> filmpje3 </a> en <a href="./slides3.pdf"> slides3 </a>  </td> <td> <!--  --> Is RegLan, de verzameling van reguliere talen regulier? Om te beginnen, is dit wel een zinvolle vraag? Een taal is een verzameling van strings, terwijl RegLan een verzameling van verzamelingen van strings is. De signatuur klopt niet. Een betere vraag zou zijn: is de verzameling van reguliere expressies een reguliere taal? Ook hierbij is er een probleem: een reguliere taal is een verzameling van strings over een vast vocabularium, terwijl reguliere expressies over willekeurige vocabuaria bestaan. Dit kan verholpen worden door in reguliere expressies de symbolen te encoderen, bv. als strings tussen vierkante haakjes [1], [11], [111], ...  Het vocabularium van RegLan is dan {epsilon, phi, [, 1, ], (, ), |, *}. Hiermee kan elke reguliere expressie geencodeerd worden. Is de resulterende taal regulier, en hoe dit te bewijzen? Als ze regulier is dan bestaat een pomplengte d zodat elke string s met |s|>d van de vorm is s = xyz, zodat x<var>y<sup>i</sup></var>z behoort tot RegLan voor alle i, |xy|&#60;d en |y|>0. Merk nu  op dat in reguliere expressies, het aantal haakjes ( en ) altijd gelijk zijn. Neem een reguliere expressie s zodat  de eerste d symbolen  linkerhaakjes ( zijn. Dan bevat y enkel linkerhaakjes, en zal bij het pompen  onevenwicht ontstaan met het aantal rechterhaakjes. Dus, RegLan is niet regulier. H Maar  is het een CFL?  <!-- -->                               </td> </tr>
+
+<tr> <td>      </td> <td>  18 okt            </td> <td> <a href="./oefz16-2.pdf"> Opgave oefenzitting 2 </a>  </td> <td> </td> <td>   <!--  --> <a href="sol16-2.pdf"> een oplossing  <!-- --> </a>  </td> </tr>
+
+<tr> <td> 24 okt    </td> <td>                    </td> <td> cursus t.e.m. 2.21 </td> <td> <a href="./filmpjeab4.mp4"> filmpje4 </a> en <a href="./slides4.pdf"> slides4 </a>  </td>   <td>   
+                                     </td> </tr>
+<tr> <td>           </td> <td>  25 okt            </td> <td>  <a href="./oefz16-3.pdf"> Opgave oefenzitting 3 </a>  </td> <td> </td> <td> <!--  -->  <a href="sol16-3.pdf"> een oplossing     </a>       </td> </tr>
+
+<tr> <td> 7 nov    </td> <td>                    </td> <td> cursus t.e.m. 3.3 </td> <td> <a href="./filmpjeab5.mp4"> filmpje5 </a> en <a href="./slides5.pdf"> slides5 </a>  </td> <td> <!--  <a href="./Complementss"> "Zelf doen" sectie 2.23 p.76, Algebra van contextvrije talen </a>  , <a href="./ContextSensitieveToDO"> "Zelf doen" sectie 2.26 Contextsensitieve Grammatica </a>   -->                                </td> </tr>
+
+ <tr> <td>           </td> <td>  8 nov            </td> <td>   <a href="./oefz16-4.pdf"> Opgave oefenzitting 4 </a>  </td> <td> </td> <td> <!-- -->    <a href="sol16-4.pdf"> een oplossing     </a>   </td> </tr>
+
+<tr> <td> 14 nov     </td> <td>                    </td> <td> cursus t.e.m. 3.13</td> <td> <a href="./filmpjeab6.mp4"> filmpje6 </a> en <a href="./slides6.pdf"> slides6 </a>  </td> <td> <!-- De contractie in bewijs van stelling 3.8.1.  heruitgelegd: C accepteert C asa C(C) = accept asa B(C,C) = reject asa C accepteert C niet.     -->    </td> </tr>  
+
+<tr> <td>           </td> <td> 15 nov            </td> <td>  <a href="./oefz16-5.pdf"> Opgave oefenzitting 5 </a>  </td> <td>            </td> <td> <!-- --> <a href="sol16-5.pdf"> een oplossing. </a>  <!-- --> <a href="SlidesOefzitting5.pdf"> Slides. </a>     </td> </tr>
+
+   
+
+<tr> <td> 21 nov    </td> <td>                    </td> <td> cursus t.e.m. 3.16</td> <td> <a href="./filmpjeab7.mp4"> filmpje7 </a> en <a href="./slides7.pdf"> slides7 </a>  </td> <td   </td> </tr>
+
+<tr> <td>           </td> <td>  22 nov  </td> <td>  Gekwoteerde oefenzitting, cursus t.e.m. p80  <!-- Hfst II --></td> <td> </td> <td> <b> Bekijk ook oefenzitting 5!  <!--  <a href="./opl2.pdf"> opgave en uitwerking van de gekwoteerde oefzitting </a> of ook <a href="./opl1.pdf"> deze </a>   --> </b> </td> </tr> 
+
+
+
+<tr><td>  28 nov            </td> <td>              </td> <td> cursus t.e.m. 3.19</td> <td> <a href="./filmpjeab8.mp4"> filmpje8 </a> en <a href="./slides8.pdf"> slides8 </a>  </td> <td> <!-- -->  </td> </tr>
+	
+	
+<tr> <td>           </td> <td>  29 nov        </td> <td>  <a href="./oefz16-6.pdf"> Opgave oefenzitting 6 </a> </td> <td>            </td> <td> <!-- --> <a href="sol16-6.pdf"> een oplossing </a>   </td> </tr>
+
+<tr> <td> 5 dec     </td> <td>                    </td> <td> geen les </td>  <td>      </td> <td> </td></tr> 
+
+
+<tr> <td>           </td> <td>  6 dec          </td> <td>  <a href="./oefz16-7.pdf"> Opgave oefenzitting 7 </a> </td> <td>            </td> <td><!-- -->  <a href="sol21_7.pdf"> een oplossing     </td> </tr>
+
+
+<tr> <td> 12 dec    </td> <td>                    </td> <td> cursus tot aan einde ; Vragen over cursus en examen </td> <td> <a href="./filmpjeab9.mp4"> filmpje9 </a> en <a href="./slides9.pdf"> slides9 </a>  </td> <td>  </td> </tr>
+
+
+<tr> <td>   </td> <td>  13 dec </td> <td>  <a href="./oefz16-8.pdf"> Opgave oefenzitting 8 </a>  </td> <td>    </td> <td><!-- --> <a href="sol8.pdf"> een oplossing </a>    </td> </tr>
+
+<tr> <td>   </td> <td>       </td> <td>   <a href="./oefz16-9.pdf"> Bijkomende oefeningen over vanalles </a> </td> <td>       </td> <td> <!--  <a href="sol16-9.pdf"> een oplossing </a>   -->  </td> </tr>
+
+
+<tr> <td> 19 dec    </td> <td>                    </td> <td> geen les       </td> <td>            </td> <td>   </td> </tr>
+
+
+<tr> <td>           </td> <td>  20 dec             </td> <td> gekwoteerde oef, t.e.m. herschrijfsystemen  </td> <td> </td> <td>  <b>- <!-- <a href="ttt-18-2.oplossing.pdf"> opgave en uitwerking van de tweede gekwoteerde oefenzitting  </a> --> </b> </td> </tr>
+
+
+
+</table>
+
+
+<p><b id="plaats-6"><font size=+1>De gekwoteerde oefenzittingen</font></b>
+
+
+<p>
+De gekwoteerde oefenzittingen gaan door op 22 nov en 20 december. Tijdens de gekwoteerde
+oefenzitting mag je de cursusnota's op papier gebruiken, met daarin je
+eigen aantekeningen (eventueel op aparte bladen papier), maar geen
+(opgeloste) oefeningen behalve de "Zelf doen"s uit de cursus.
+
+<p> 
+Ze zijn verplicht. Voor wie 1x gewettigd afwezig is, zal de oefening niet hernomen worden maar de examenscore wordt geschaald van 17 naar 20. Wie 2x gewettigd afwezig is, zal een speciale gekwoteerde oefensessie krijgen. 
+
+
+<p><b id="plaats-7"><font size=+1>De oefenzittingen</font></b>
+
+<p>
+
+De andere oefenzittingen zijn gepland op dinsdagen
+vanaf begin oktober. De oefenzittingen moeten voorbereid worden: de
+opgaven zullen hierboven verschijnen, en later ook oplossingen.
+
+<p>
+
+
+<hr WIDTH="100%">
+
+
+
+<b id="plaats-5"> <font size=+1> 
+<a href="examenvragen">Mogelijke examenvragen<a>
+</font></b><p>
+<p>
+Gebruik deze lijst verstandig en voorzichtig. Geen enkele poging werd
+gedaan om een volledige lijst op te stellen of om alle topics uit de
+cursus te bedekken. Er is ook geen garantie dat de vragen uit deze
+lijst effectief zullen gesteld worden op het examen.
+
+<hr>
+
+</body>
+</html>
